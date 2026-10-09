@@ -1,0 +1,24 @@
+-- aula 26
+IF NOT EXISTS CREATE TABLE usuario (
+    id_usuario SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    id_turma INT REFERENCES turma(id_turma),
+    id_funcao INT REFERENCES funcao(id_funcao),
+    -- MUDAR TURMA PARA ARQUIVAR USUARIO AO FECHAR TURMA E FUNCAO TBM
+    email VARCHAR(255) NOT NULL UNIQUE,
+    senha VARCHAR(255) NOT NULL,
+    telefone VARCHAR(15) UNIQUE,
+    grupo VARCHAR(1) NOT NULL DEFAULT 'n'--?
+);
+
+IF NOT EXISTS CREATE TABLE turma (
+    id_turma SERIAL PRIMARY KEY,
+    nome VARCHAR(50) NOT NULL,
+    serie INT NOT NULL,
+    divisao BOOLEAN DEFAULT FALSE
+);
+
+IF NOT EXISTS CREATE TABLE funcao (
+    id_funcao SERIAL PRIMARY KEY,
+    nome VARCHAR(50) NOT NULL UNIQUE
+);
