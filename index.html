@@ -5,45 +5,108 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="style.css">
+    <!-- <link rel="stylesheet" href="style.css"> -->
 </head>
 
 <body>
 
     <header>
-        <div class="menu-hamburguer">
-            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg>
-            <!-- modal apenas para exemplo, mas sera feito no js -->
-            <div class="menu hidden">
+        <button class="menu-hamburguer" id="btnMenu">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f">
+                <path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" />
+            </svg>
+            <div class="menu" hidden>
                 <ul class="links">
                     <li><a href="#">Turmas</a></li>
                     <li><a href="#">Alunos</a></li>
                     <li><a href="#">Sair</a></li>
                 </ul>
             </div>
-        </div>
+        </button>
         <div class="title-div">
             <h1>Fetec</h1>
         </div>
-        <div class="user-avatar">
+        <div class="avatar-wrap">
             <!-- parte de avatar do usuario(ser feito com js) -->
-            User
+            <button class="avatar-btn" id="btnAvatar" aria-label="Perfil" title="Perfil" aria-haspopup="true"
+                aria-expanded="false">AV</button>
+            <div>
+                <button type="button" class="avatar-menu-item" data-action="perfil">Perfil</button>
+                <button type="button" class="avatar-menu-item" data-action="configuracao">Configuração</button>
+                <hr>
+                <button type="button" class="avatar-menu-item" data-action="logout">Sair</button>
+            </div>
         </div>
     </header>
-    <main>
-        <section class="turmas" id="turmas">
-            <div class="turmas-header">
-                <h2>Turmas</h2>
-                <div class="add-turma">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#1f1f1f"><path d="M446.67-446.67H200v-66.66h246.67V-760h66.66v246.67H760v66.66H513.33V-200h-66.66v-246.67Z"/></svg>
-                </div>
-            </div>
+    <nav class="side-menu" id="sideMenu" aria-hidden="true">
+        <ul>
+            <li><a href="#">Turmas</a></li>
+            <li><a href="#">Alunos</a></li>
+            <li><a href="#">Sair</a></li>
+        </ul>
+    </nav>
+    <main class="content">
+        <section class="turmas-header">
+
+            <h2>Turmas</h2>
+            <button class="icon-btn btn-add" id="btnAdd" aria-label="Adicionar Turma" title="Adicionar Turma">
+                <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px"
+                    fill="#1f1f1f">
+                    <path
+                        d="M446.67-446.67H200v-66.66h246.67V-760h66.66v246.67H760v66.66H513.33V-200h-66.66v-246.67Z" />
+                </svg>
+            </button>
+
             <div class="turmas-map" id="turmas-map"></div>
         </section>
+        <ul class="turmas-list" id="turmasList"></ul>
+        <p class="empty-state" id="emptyState" hidden>Nenhuma turma cadastrada. Clique em <strong>+</strong> para criar
+            a primeira.</p>
+        <div class="modal-overlay" id="modalOverlay">
+            <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTrue">
+                <button class="modal-close" id="btnModalClose" aria-label="Fechar">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                        fill="#1f1f1f">
+                        <path
+                            d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+                    </svg>
+                </button>
+                <h3 class="modal-title" id="modalTitle">Nova Turma
+                    <form id="turmaForm" novalidate>
+                        <input type="hidden" name="turmaId" id="turmaId">
+                        <label class="field">
+                            <span>Nome</span>
+                            <input type="text" id="inputNome" placeholder="Ex:DS" required maxlength="40">
+                        </label>
+                        <label class="field">
+                            <span>Serie</span>
+                            <select id="inputSerie">
+                                <option value="1">1º</option>
+                                <option value="2">2º</option>
+                                <option value="3">3º</option>
+                            </select>
+                        </label>
+                        <label class="field">
+                            <span>Divisao</span>
+                            <span class="checkbox-row">
+
+                                <input type="checkbox" id="inputDivisao">
+                            </span>
+                        </label>
+                        <div class="modal-actions">
+                            <button type="submit"></button>
+                        </div>
+                    </form>
+                </h3>
+            </div>
+        </div>
     </main>
-    <div class="overlay-create-turma hidden">
+    <div class="overlay-create-turma" hidden>
         <div class="container">
-            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f">
+                <path
+                    d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+            </svg>
             <h2>Turma Nova</h2>
             <form action="">
                 <div class="label">
