@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <!-- <link rel="stylesheet" href="style.css"> -->
+    <link rel="stylesheet" href="turma.css">
 </head>
 
 <body>
@@ -30,11 +30,11 @@
             <!-- parte de avatar do usuario(ser feito com js) -->
             <button class="avatar-btn" id="btnAvatar" aria-label="Perfil" title="Perfil" aria-haspopup="true"
                 aria-expanded="false">AV</button>
-            <div>
+            <div class="avatar-menu">
                 <button type="button" class="avatar-menu-item" data-action="perfil">Perfil</button>
                 <button type="button" class="avatar-menu-item" data-action="configuracao">Configuração</button>
                 <hr>
-                <button type="button" class="avatar-menu-item" data-action="logout">Sair</button>
+                <button type="button" class="avatar-menu-item avatar-menu-logout" data-action="logout">Sair</button>
             </div>
         </div>
     </header>
@@ -45,6 +45,7 @@
             <li><a href="#">Sair</a></li>
         </ul>
     </nav>
+    <div class="side-menu-overlay" id="sideMenuOverlay"></div>
     <main class="content">
         <section class="turmas-header">
 
@@ -60,47 +61,48 @@
             <div class="turmas-map" id="turmas-map"></div>
         </section>
         <ul class="turmas-list" id="turmasList"></ul>
-        <p class="empty-state" id="emptyState" hidden>Nenhuma turma cadastrada. Clique em <strong>+</strong> para criar
+        <p class="empty-state" id="emptyState" >Nenhuma turma cadastrada. Clique em <strong>+</strong> para criar
             a primeira.</p>
-        <div class="modal-overlay" id="modalOverlay">
-            <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTrue">
-                <button class="modal-close" id="btnModalClose" aria-label="Fechar">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                        fill="#1f1f1f">
-                        <path
-                            d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
-                    </svg>
-                </button>
-                <h3 class="modal-title" id="modalTitle">Nova Turma
-                    <form id="turmaForm" novalidate>
-                        <input type="hidden" name="turmaId" id="turmaId">
-                        <label class="field">
-                            <span>Nome</span>
-                            <input type="text" id="inputNome" placeholder="Ex:DS" required maxlength="40">
-                        </label>
-                        <label class="field">
-                            <span>Serie</span>
-                            <select id="inputSerie">
-                                <option value="1">1º</option>
-                                <option value="2">2º</option>
-                                <option value="3">3º</option>
-                            </select>
-                        </label>
-                        <label class="field">
-                            <span>Divisao</span>
-                            <span class="checkbox-row">
-
-                                <input type="checkbox" id="inputDivisao">
-                            </span>
-                        </label>
-                        <div class="modal-actions">
-                            <button type="submit"></button>
-                        </div>
-                    </form>
-                </h3>
-            </div>
-        </div>
     </main>
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTrue">
+            <button class="modal-close" id="btnModalClose" aria-label="Fechar">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                    fill="#1f1f1f">
+                    <path
+                        d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+                </svg>
+            </button>
+            <h3 class="modal-title" id="modalTitle">Nova Turma
+                <form id="turmaForm" novalidate>
+                    <input type="hidden" name="turmaId" id="turmaId">
+                    <label class="field">
+                        <span>Nome</span>
+                        <input type="text" id="inputNome" placeholder="Ex:DS" required maxlength="40">
+                    </label>
+                    <label class="field">
+                        <span>Serie</span>
+                        <select id="inputSerie">
+                            <option value="1">1º</option>
+                            <option value="2">2º</option>
+                            <option value="3">3º</option>
+                        </select>
+                    </label>
+                    <label class="field">
+                        <span>Divisao</span>
+                        <span class="checkbox-row">
+
+                            <input type="checkbox" id="inputDivisao">
+                        </span>
+                    </label>
+                    <div class="modal-actions">
+                        <button type="button">Cancelar</button>
+                        <button type="submit">Enviar</button>
+                    </div>
+                </form>
+            </h3>
+        </div>
+    </div>
     <div class="overlay-create-turma" hidden>
         <div class="container">
             <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f">
@@ -122,9 +124,21 @@
                     <input type="checkbox" name="divisao-turma" id="divisaoTurma">
                 </div>
                 <button type="submit">Enviar</button>
+                <button type="button">Cancelar</button>
             </form>
         </div>
     </div>
+    <div class="modal-overlay" hidden>
+        <div class="modal modal-small" role="dialog" aria-modal="true" aria-labelledby="deleteTitle">
+            <h3 class="modal-title" id="deleteTitle">Excluir Turma</h3>
+            <p class="modal-text" id="deleteText">Tem certeza que deseja excluir esta turma?</p>
+            <div class="modal-actions">
+                <button type="button" class="btn-danger" id="btnConfirmDelete">Excluir</button>
+                <button type="button" class="btn-secondary" id="btnCancelDelete">Cancelar</button>
+            </div>
+        </div>
+    </div>
+    <script src="turma.js"></script>
 </body>
 
 </html>
